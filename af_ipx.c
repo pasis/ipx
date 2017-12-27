@@ -2,7 +2,7 @@
  *	Implements an IPX socket layer.
  *
  *	This code is derived from work by
- *		Ross Biro	: 	Writing the original IP stack
+ *		Ross Biro	:	Writing the original IP stack
  *		Fred Van Kempen :	Tidying up the TCP/IP
  *
  *	Many thanks go to Keith Baker, Institute For Industrial Information
@@ -20,7 +20,7 @@
  *	provide warranty for any of this software. This material is provided
  *	"AS-IS" and at no charge.
  *
- * 	Portions Copyright (c) 1995 Caldera, Inc. <greg@caldera.com>
+ *	Portions Copyright (c) 1995 Caldera, Inc. <greg@caldera.com>
  *	Neither Greg Page nor Caldera, Inc. admit liability nor provide
  *	warranty for any of this software. This material is provided
  *	"AS-IS" and at no charge.
@@ -759,7 +759,7 @@ static void ipxitf_discover_netnum(struct ipx_interface *intrfc,
 
 /**
  * ipxitf_pprop - Process packet propagation IPX packet type 0x14, used for
- * 		  NetBIOS broadcasts
+ *		  NetBIOS broadcasts
  * @intrfc: IPX interface receiving this packet
  * @skb: Received packet
  *
@@ -871,11 +871,11 @@ static struct ipx_interface *ipxitf_alloc(struct net_device *dev, __be32 netnum,
 	if (intrfc) {
 		intrfc->if_dev		= dev;
 		intrfc->if_netnum	= netnum;
-		intrfc->if_dlink_type 	= dlink_type;
-		intrfc->if_dlink 	= dlink;
-		intrfc->if_internal 	= internal;
-		intrfc->if_ipx_offset 	= ipx_offset;
-		intrfc->if_sknum 	= IPX_MIN_EPHEMERAL_SOCKET;
+		intrfc->if_dlink_type	= dlink_type;
+		intrfc->if_dlink	= dlink;
+		intrfc->if_internal	= internal;
+		intrfc->if_ipx_offset	= ipx_offset;
+		intrfc->if_sknum	= IPX_MIN_EPHEMERAL_SOCKET;
 		INIT_HLIST_HEAD(&intrfc->if_sklist);
 		refcount_set(&intrfc->refcnt, 1);
 		spin_lock_init(&intrfc->if_sklist_lock);
@@ -966,23 +966,23 @@ static int ipxitf_create(struct ipx_interface_definition *idef)
 
 	switch (idef->ipx_dlink_type) {
 	case IPX_FRAME_8022:
-		dlink_type 	= htons(ETH_P_802_2);
-		datalink 	= p8022_datalink;
+		dlink_type	= htons(ETH_P_802_2);
+		datalink	= p8022_datalink;
 		break;
 	case IPX_FRAME_ETHERII:
 		if (dev->type != ARPHRD_IEEE802) {
-			dlink_type 	= htons(ETH_P_IPX);
-			datalink 	= pEII_datalink;
+			dlink_type	= htons(ETH_P_IPX);
+			datalink	= pEII_datalink;
 			break;
 		}
 		/* fall through */
 	case IPX_FRAME_SNAP:
-		dlink_type 	= htons(ETH_P_SNAP);
-		datalink 	= pSNAP_datalink;
+		dlink_type	= htons(ETH_P_SNAP);
+		datalink	= pSNAP_datalink;
 		break;
 	case IPX_FRAME_8023:
-		dlink_type 	= htons(ETH_P_802_3);
-		datalink 	= p8023_datalink;
+		dlink_type	= htons(ETH_P_802_3);
+		datalink	= p8023_datalink;
 		break;
 	case IPX_FRAME_NONE:
 	default:
@@ -1523,7 +1523,7 @@ static int ipx_connect(struct socket *sock, struct sockaddr *uaddr,
 	struct ipx_route *rt;
 
 	sk->sk_state	= TCP_CLOSE;
-	sock->state 	= SS_UNCONNECTED;
+	sock->state	= SS_UNCONNECTED;
 
 	lock_sock(sk);
 	if (addr_len != sizeof(*addr))
@@ -1535,7 +1535,7 @@ static int ipx_connect(struct socket *sock, struct sockaddr *uaddr,
 		struct sockaddr_ipx uaddr;
 
 		uaddr.sipx_port		= 0;
-		uaddr.sipx_network 	= 0;
+		uaddr.sipx_network	= 0;
 
 #ifdef CONFIG_IPX_INTERN
 		rc = -ENETDOWN;
@@ -1564,8 +1564,8 @@ static int ipx_connect(struct socket *sock, struct sockaddr *uaddr,
 	ipxs->type = addr->sipx_type;
 
 	if (sock->type == SOCK_DGRAM) {
-		sock->state 	= SS_CONNECTED;
-		sk->sk_state 	= TCP_ESTABLISHED;
+		sock->state	= SS_CONNECTED;
+		sk->sk_state	= TCP_ESTABLISHED;
 	}
 
 	if (rt)
@@ -1735,10 +1735,10 @@ static int ipx_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
 			goto out;
 
 		usipx = &local_sipx;
-		usipx->sipx_family 	= AF_IPX;
-		usipx->sipx_type 	= ipxs->type;
-		usipx->sipx_port 	= ipxs->dest_addr.sock;
-		usipx->sipx_network 	= ipxs->dest_addr.net;
+		usipx->sipx_family	= AF_IPX;
+		usipx->sipx_type	= ipxs->type;
+		usipx->sipx_port	= ipxs->dest_addr.sock;
+		usipx->sipx_network	= ipxs->dest_addr.net;
 		memcpy(usipx->sipx_node, ipxs->dest_addr.node, IPX_NODE_LEN);
 	}
 
@@ -1768,7 +1768,7 @@ static int ipx_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
 		struct sockaddr_ipx uaddr;
 
 		uaddr.sipx_port		= 0;
-		uaddr.sipx_network 	= 0;
+		uaddr.sipx_network	= 0;
 
 #ifdef CONFIG_IPX_INTERN
 		rc = -ENETDOWN;
@@ -1797,8 +1797,8 @@ static int ipx_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
 		goto out;
 	}
 
-	ipx 	= ipx_hdr(skb);
-	copied 	= ntohs(ipx->ipx_pktsize) - sizeof(struct ipxhdr);
+	ipx	= ipx_hdr(skb);
+	copied	= ntohs(ipx->ipx_pktsize) - sizeof(struct ipxhdr);
 	if (copied > size) {
 		copied = size;
 		msg->msg_flags |= MSG_TRUNC;
@@ -1815,7 +1815,7 @@ static int ipx_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
 		sipx->sipx_port		= ipx->ipx_source.sock;
 		memcpy(sipx->sipx_node, ipx->ipx_source.node, IPX_NODE_LEN);
 		sipx->sipx_network	= IPX_SKB_CB(skb)->ipx_source_net;
-		sipx->sipx_type 	= ipx->ipx_type;
+		sipx->sipx_type		= ipx->ipx_type;
 		sipx->sipx_zero		= 0;
 		msg->msg_namelen	= sizeof(*sipx);
 	}

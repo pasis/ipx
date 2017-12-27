@@ -2,7 +2,7 @@
 /*
  *	IPX proc routines
  *
- * 	Copyright(C) Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 2002
+ *	Copyright(C) Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 2002
  */
 
 #include <linux/init.h>

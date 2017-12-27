@@ -71,8 +71,8 @@ int ipxrtr_add_route(__be32 network, struct ipx_interface *intrfc,
 			goto out_put;
 	}
 
-	rt->ir_net 	= network;
-	rt->ir_intrfc 	= intrfc;
+	rt->ir_net	= network;
+	rt->ir_intrfc	= intrfc;
 	if (!node) {
 		memset(rt->ir_router_node, '\0', IPX_NODE_LEN);
 		rt->ir_routed = 0;
@@ -207,7 +207,7 @@ int ipxrtr_route_packet(struct sock *sk, struct sockaddr_ipx *usipx,
 	ipx = ipx_hdr(skb);
 	ipx->ipx_pktsize = htons(len + sizeof(struct ipxhdr));
 	IPX_SKB_CB(skb)->ipx_tctrl = 0;
-	ipx->ipx_type 	 = usipx->sipx_type;
+	ipx->ipx_type	 = usipx->sipx_type;
 
 	IPX_SKB_CB(skb)->last_hop.index = -1;
 #ifdef CONFIG_IPX_INTERN
