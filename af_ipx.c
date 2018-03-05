@@ -745,7 +745,7 @@ static void ipxitf_discover_netnum(struct ipx_interface *intrfc,
 			intrfc->if_netnum = cb->ipx_source_net;
 			ipxitf_add_local_route(intrfc);
 		} else {
-			printk(KERN_WARNING "IPX: Network number collision "
+			net_warn_ratelimited("IPX: Network number collision "
 				"%lx\n        %s %s and %s %s\n",
 				(unsigned long) ntohl(cb->ipx_source_net),
 				ipx_device_name(i),
