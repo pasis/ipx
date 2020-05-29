@@ -1,0 +1,9 @@
+IPX kernel module for Linux 4.18+
+
+IPX support has been removed in Linux 4.18. Current repository fixes this.
+
+You may also want to check userspace utilities that help to configure IPX
+network: https://github.com/pasis/ipx-utils .
+
+The source code has been copied from Linux kernel and distributed under GPL-2.0
+license.
