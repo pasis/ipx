@@ -48,7 +48,7 @@
 #include <linux/types.h>
 #include <linux/termios.h>
 
-#include <net/ipx.h>
+#include "net/ipx.h"
 #include <net/p8022.h>
 #include <net/psnap.h>
 #include <net/sock.h>

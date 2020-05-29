@@ -13,7 +13,7 @@
 #include <linux/export.h>
 #include <net/net_namespace.h>
 #include <net/tcp_states.h>
-#include <net/ipx.h>
+#include "net/ipx.h"
 
 static void *ipx_seq_interface_start(struct seq_file *seq, loff_t *pos)
 {

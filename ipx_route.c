@@ -13,7 +13,7 @@
 #include <linux/slab.h>
 #include <linux/spinlock.h>
 
-#include <net/ipx.h>
+#include "net/ipx.h"
 #include <net/sock.h>
 
 LIST_HEAD(ipx_routes);
