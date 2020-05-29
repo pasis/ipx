@@ -47,6 +47,7 @@
 #include <linux/string.h>
 #include <linux/types.h>
 #include <linux/termios.h>
+#include <linux/version.h>
 
 #include "net/ipx.h"
 #include <net/p8022.h>
@@ -1883,9 +1884,11 @@ static int ipx_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 		rc = get_user(ipx_sk(sk)->ipx_ncp_conn,
 			      (const unsigned short __user *)argp);
 		break;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,2,0)
 	case SIOCGSTAMP:
 		rc = sock_get_timestamp(sk, argp);
 		break;
+#endif
 	case SIOCGIFDSTADDR:
 	case SIOCSIFDSTADDR:
 	case SIOCGIFBRDADDR:
@@ -1969,6 +1972,9 @@ static const struct proto_ops ipx_dgram_ops = {
 	.ioctl		= ipx_ioctl,
 #ifdef CONFIG_COMPAT
 	.compat_ioctl	= ipx_compat_ioctl,
+#endif
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,2,0)
+	.gettstamp	= sock_gettstamp,
 #endif
 	.listen		= sock_no_listen,
 	.shutdown	= ipx_shutdown,
