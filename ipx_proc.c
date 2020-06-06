@@ -11,6 +11,7 @@
 #include <linux/spinlock.h>
 #include <linux/seq_file.h>
 #include <linux/export.h>
+#include <linux/version.h>
 #include <net/net_namespace.h>
 #include <net/tcp_states.h>
 #include "net/ipx.h"
@@ -259,6 +260,7 @@ static int ipx_seq_socket_open(struct inode *inode, struct file *file)
 	return seq_open(file, &ipx_seq_socket_ops);
 }
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,6,0)
 static const struct file_operations ipx_seq_interface_fops = {
 	.open           = ipx_seq_interface_open,
 	.read           = seq_read,
@@ -279,6 +281,28 @@ static const struct file_operations ipx_seq_socket_fops = {
 	.llseek         = seq_lseek,
 	.release        = seq_release,
 };
+#else
+static const struct proc_ops ipx_seq_interface_fops = {
+	.proc_open      = ipx_seq_interface_open,
+	.proc_read      = seq_read,
+	.proc_lseek     = seq_lseek,
+	.proc_release   = seq_release,
+};
+
+static const struct proc_ops ipx_seq_route_fops = {
+	.proc_open      = ipx_seq_route_open,
+	.proc_read      = seq_read,
+	.proc_lseek     = seq_lseek,
+	.proc_release   = seq_release,
+};
+
+static const struct proc_ops ipx_seq_socket_fops = {
+	.proc_open      = ipx_seq_socket_open,
+	.proc_read      = seq_read,
+	.proc_lseek     = seq_lseek,
+	.proc_release   = seq_release,
+};
+#endif
 
 static struct proc_dir_entry *ipx_proc_dir;
 
