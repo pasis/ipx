@@ -1264,7 +1264,12 @@ const char *ipx_device_name(struct ipx_interface *intrfc)
  * socket object. */
 
 static int ipx_setsockopt(struct socket *sock, int level, int optname,
-			  char __user *optval, unsigned int optlen)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,9,0)
+			  char __user *optval,
+#else
+			  sockptr_t optval,
+#endif
+			  unsigned int optlen)
 {
 	struct sock *sk = sock->sk;
 	int opt;
@@ -1274,9 +1279,15 @@ static int ipx_setsockopt(struct socket *sock, int level, int optname,
 	if (optlen != sizeof(int))
 		goto out;
 
-	rc = -EFAULT;
-	if (get_user(opt, (unsigned int __user *)optval))
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,9,0)
+	rc = get_user(opt, (unsigned int __user *)optval);
+#else
+	rc = copy_from_sockptr(&opt, optval, sizeof(opt));
+#endif
+	if (rc != 0) {
+		rc = -EFAULT;
 		goto out;
+	}
 
 	rc = -ENOPROTOOPT;
 	if (!(level == SOL_IPX && optname == IPX_TYPE))
