@@ -33,7 +33,6 @@
 #include <linux/if_arp.h>
 #include <linux/if_ether.h>
 #include <linux/init.h>
-#include <linux/ipx.h>
 #include <linux/kernel.h>
 #include <linux/list.h>
 #include <linux/module.h>
@@ -58,6 +57,12 @@
 #include <net/net_namespace.h>
 
 #include <linux/uaccess.h>
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,15,0)
+#include <linux/ipx.h>
+#else
+#include "linux/ipx.h"
+#endif
 
 /* Configuration Variables */
 static unsigned char ipxcfg_max_hops = 16;

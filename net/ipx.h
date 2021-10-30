@@ -12,10 +12,16 @@
 
 #include <linux/netdevice.h>
 #include <net/datalink.h>
-#include <linux/ipx.h>
 #include <linux/list.h>
 #include <linux/slab.h>
 #include <linux/refcount.h>
+#include <linux/version.h>
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,15,0)
+#include <linux/ipx.h>
+#else
+#include "../linux/ipx.h"
+#endif
 
 struct ipx_address {
 	__be32  net;
