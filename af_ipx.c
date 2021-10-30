@@ -975,7 +975,10 @@ static int ipxitf_create(struct ipx_interface_definition *idef)
 			datalink	= pEII_datalink;
 			break;
 		}
-		/* fall through */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,14,0)
+		fallthrough;
+#endif
+		/* fallthrough */
 	case IPX_FRAME_SNAP:
 		dlink_type	= htons(ETH_P_SNAP);
 		datalink	= pSNAP_datalink;
@@ -1877,7 +1880,10 @@ static int ipx_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 		rc = -EPERM;
 		if (!capable(CAP_NET_ADMIN))
 			break;
-		/* fall through */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,14,0)
+		fallthrough;
+#endif
+		/* fallthrough */
 	case SIOCGIFADDR:
 		rc = ipxitf_ioctl(cmd, argp);
 		break;
