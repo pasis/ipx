@@ -5,11 +5,16 @@
 #include <linux/netdevice.h>
 #include <linux/skbuff.h>
 #include <linux/slab.h>
+#include <linux/version.h>
 
 #include <net/datalink.h>
 
 static int pEII_request(struct datalink_proto *dl,
-			struct sk_buff *skb, unsigned char *dest_node)
+			struct sk_buff *skb,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,16,0)
+			const
+#endif
+			unsigned char *dest_node)
 {
 	struct net_device *dev = skb->dev;
 
