@@ -1808,8 +1808,12 @@ static int ipx_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
 
 	release_sock(sk);
 	locked = false;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,18,0)
 	skb = skb_recv_datagram(sk, flags & ~MSG_DONTWAIT,
 				flags & MSG_DONTWAIT, &rc);
+#else
+	skb = skb_recv_datagram(sk, flags, &rc);
+#endif
 	if (!skb) {
 		if (rc == -EAGAIN && (sk->sk_shutdown & RCV_SHUTDOWN))
 			rc = 0;
