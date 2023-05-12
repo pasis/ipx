@@ -64,6 +64,12 @@
 #include "linux/ipx.h"
 #endif
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,3,0)
+#define sk_refcnt_debug_inc(sk) do { } while (0)
+#define sk_refcnt_debug_dec(sk) do { } while (0)
+#define sk_refcnt_debug_release(sk) do { } while (0)
+#endif
+
 /* Configuration Variables */
 static unsigned char ipxcfg_max_hops = 16;
 static char ipxcfg_auto_select_primary;
