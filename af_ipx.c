@@ -2015,7 +2015,9 @@ static const struct proto_ops ipx_dgram_ops = {
 	.sendmsg	= ipx_sendmsg,
 	.recvmsg	= ipx_recvmsg,
 	.mmap		= sock_no_mmap,
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6,5,0)
 	.sendpage	= sock_no_sendpage,
+#endif
 };
 
 static struct packet_type ipx_8023_packet_type __read_mostly = {
