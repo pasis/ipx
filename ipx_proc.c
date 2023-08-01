@@ -52,7 +52,7 @@ static int ipx_seq_interface_show(struct seq_file *seq, void *v)
 			i->if_node[0], i->if_node[1], i->if_node[2],
 			i->if_node[3], i->if_node[4], i->if_node[5]);
 	seq_printf(seq, "%-9s", i == ipx_primary_net ? "Yes" : "No");
-	seq_printf(seq, "%-11s", ipx_device_name(i));
+	seq_printf(seq, "%-10s ", ipx_device_name(i));
 	seq_printf(seq, "%-9s", ipx_frame_name(i->if_dlink_type));
 #ifdef IPX_REFCNT_DEBUG
 	seq_printf(seq, "%6d", refcount_read(&i->refcnt));
