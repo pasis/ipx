@@ -179,4 +179,14 @@ static __inline__ void ipxrtr_put(struct ipx_route *rt)
 	        if (refcount_dec_and_test(&rt->refcnt))
 			                kfree(rt);
 }
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,6,0)
+/* Removed from <net/p8022.h> */
+struct datalink_proto *make_8023_client(void);
+void destroy_8023_client(struct datalink_proto *dl);
+/* Removed from <net/datalink.h> */
+struct datalink_proto *make_EII_client(void);
+void destroy_EII_client(struct datalink_proto *dl);
+#endif
+
 #endif /* _NET_INET_IPX_H_ */
