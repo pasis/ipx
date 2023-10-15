@@ -1,6 +1,11 @@
 IPX kernel module for Linux 4.18+
+---------------------------------
 
-IPX support has been removed in Linux 4.18. Current repository fixes this.
+To build the ipx module, simply run `make`. For non-standard kernel sources
+location: `make KERNELDIR=<kernel-sources-path>`.
+
+Current module depends on "psnap" and "p8022" kernel modules. In case you build
+the kernel manually, make sure to enable CONFIG_LLC.
 
 You may also want to check userspace utilities:
 https://github.com/pasis/ipx-utils.
