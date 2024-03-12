@@ -48,7 +48,6 @@
 #include <linux/termios.h>
 #include <linux/version.h>
 
-#include "net/ipx.h"
 #include <net/p8022.h>
 #include <net/psnap.h>
 #include <net/sock.h>
@@ -63,6 +62,8 @@
 #else
 #include "linux/ipx.h"
 #endif
+
+#include "net/ipx.h"
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6,3,0)
 #define sk_refcnt_debug_inc(sk) do { } while (0)

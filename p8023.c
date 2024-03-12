@@ -24,6 +24,8 @@
 #include <net/datalink.h>
 #include <net/p8022.h>
 
+#include "net/ipx.h"
+
 /*
  *	Place an 802.3 header on a packet. The driver will do the mac
  *	addresses, we just need to give it the buffer length.

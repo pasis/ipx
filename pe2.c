@@ -9,6 +9,8 @@
 
 #include <net/datalink.h>
 
+#include "net/ipx.h"
+
 static int pEII_request(struct datalink_proto *dl,
 			struct sk_buff *skb,
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(5,16,0)
