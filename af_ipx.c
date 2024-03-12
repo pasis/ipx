@@ -1480,7 +1480,7 @@ static int __ipx_bind(struct socket *sock,
 		rc = -EADDRINUSE;
 		if (ipxitf_find_internal_socket(intrfc, ipxs->node,
 						ipxs->port)) {
-			SOCK_DEBUG(sk,
+			net_dbg_ratelimited(
 				"IPX: bind failed because port %X in use.\n",
 				ntohs(addr->sipx_port));
 			goto out_put;
@@ -1495,7 +1495,7 @@ static int __ipx_bind(struct socket *sock,
 
 		rc = -EADDRINUSE;
 		if (ipxitf_find_socket(intrfc, addr->sipx_port)) {
-			SOCK_DEBUG(sk,
+			net_dbg_ratelimited(
 				"IPX: bind failed because port %X in use.\n",
 				ntohs(addr->sipx_port));
 			goto out_put;
@@ -1509,8 +1509,9 @@ static int __ipx_bind(struct socket *sock,
 
 	rc = -EADDRINUSE;
 	if (ipxitf_find_socket(intrfc, addr->sipx_port)) {
-		SOCK_DEBUG(sk, "IPX: bind failed because port %X in use.\n",
-				ntohs((int)addr->sipx_port));
+		net_dbg_ratelimited(
+			"IPX: bind failed because port %X in use.\n",
+			ntohs((int)addr->sipx_port));
 		goto out_put;
 	}
 
