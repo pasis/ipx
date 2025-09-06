@@ -13,6 +13,6 @@ else
 
 $(info Building with KERNELRELEASE = ${KERNELRELEASE})
 obj-m := ipx.o
-ipx-y := af_ipx.o ipx_route.o ipx_proc.o pe2.o p8023.o sysctl_net_ipx.o
+ipx-y := af_ipx.o ipx_route.o ipx_proc.o pe2.o p8022.o p8023.o sysctl_net_ipx.o
 
 endif
