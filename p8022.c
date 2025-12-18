@@ -20,7 +20,7 @@
 #include <linux/in.h>
 #include <linux/init.h>
 #include <net/llc.h>
-#include <net/p8022.h>
+#include "net/p8022.h"
 
 static int p8022_request(struct datalink_proto *dl, struct sk_buff *skb,
 			 const unsigned char *dest)

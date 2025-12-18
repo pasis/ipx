@@ -22,8 +22,7 @@
 #include <linux/version.h>
 
 #include <net/datalink.h>
-#include <net/p8022.h>
-
+#include "net/p8022.h"
 #include "net/ipx.h"
 
 /*

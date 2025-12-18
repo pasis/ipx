@@ -48,7 +48,7 @@
 #include <linux/termios.h>
 #include <linux/version.h>
 
-#include <net/p8022.h>
+#include "net/p8022.h"
 #include <net/psnap.h>
 #include <net/sock.h>
 #include <net/datalink.h>
