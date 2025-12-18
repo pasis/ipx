@@ -16,6 +16,15 @@
 #include <net/tcp_states.h>
 #include "net/ipx.h"
 
+static kuid_t ipx_get_socket_uid(struct sock *sk)
+{
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 16, 1)
+    return sk_uid(sk);
+#else
+    return sock_i_uid(sk);
+#endif
+}
+
 static void *ipx_seq_interface_start(struct seq_file *seq, loff_t *pos)
 {
 	spin_lock_bh(&ipx_interfaces_lock);
@@ -219,7 +228,7 @@ static int ipx_seq_socket_show(struct seq_file *seq, void *v)
 		   sk_wmem_alloc_get(s),
 		   sk_rmem_alloc_get(s),
 		   s->sk_state,
-		   from_kuid_munged(seq_user_ns(seq), sock_i_uid(s)));
+		   from_kuid_munged(seq_user_ns(seq), ipx_get_socket_uid(s)));
 out:
 	return 0;
 }
