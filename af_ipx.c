@@ -1528,19 +1528,30 @@ out:
 	return rc;
 }
 
-static int ipx_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+static int ipx_bind(struct socket *sock,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,19,0)
+	struct sockaddr_unsized *uaddr,
+#else
+	struct sockaddr *uaddr,
+#endif
+	int addr_len)
 {
 	struct sock *sk = sock->sk;
 	int rc;
 
 	lock_sock(sk);
-	rc = __ipx_bind(sock, uaddr, addr_len);
+	rc = __ipx_bind(sock, (struct sockaddr *)uaddr, addr_len);
 	release_sock(sk);
 
 	return rc;
 }
 
-static int ipx_connect(struct socket *sock, struct sockaddr *uaddr,
+static int ipx_connect(struct socket *sock,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,19,0)
+	struct sockaddr_unsized *uaddr,
+#else
+	struct sockaddr *uaddr,
+#endif
 	int addr_len, int flags)
 {
 	struct sock *sk = sock->sk;
