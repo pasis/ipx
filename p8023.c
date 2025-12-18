@@ -22,7 +22,9 @@
 #include <linux/version.h>
 
 #include <net/datalink.h>
-#include "net/p8022.h"
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6,16,0)
+#include <net/p8022.h>
+#endif
 #include "net/ipx.h"
 
 /*

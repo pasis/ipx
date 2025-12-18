@@ -19,11 +19,19 @@
 #include <linux/mm.h>
 #include <linux/in.h>
 #include <linux/init.h>
+#include <linux/version.h>
 #include <net/llc.h>
-#include "net/p8022.h"
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6,16,0)
+#include <net/p8022.h>
+#endif
+
+#include "net/ipx.h"
 
 static int p8022_request(struct datalink_proto *dl, struct sk_buff *skb,
-			 const unsigned char *dest)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,16,0)
+			 const
+#endif
+			 unsigned char *dest)
 {
 	llc_build_and_send_ui_pkt(dl->sap, skb, dest, dl->sap->laddr.lsap);
 	return 0;

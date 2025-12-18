@@ -180,6 +180,21 @@ static __inline__ void ipxrtr_put(struct ipx_route *rt)
 			                kfree(rt);
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,16,0)
+/* Removed from <net/p8022.h> */
+struct net_device;
+struct packet_type;
+struct sk_buff;
+
+struct datalink_proto *
+register_8022_client(unsigned char type,
+		     int (*func)(struct sk_buff *skb,
+				 struct net_device *dev,
+				 struct packet_type *pt,
+				 struct net_device *orig_dev));
+void unregister_8022_client(struct datalink_proto *proto);
+#endif
+
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6,6,0)
 /* Removed from <net/p8022.h> */
 struct datalink_proto *make_8023_client(void);
