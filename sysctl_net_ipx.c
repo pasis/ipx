@@ -9,6 +9,7 @@
 
 #include <linux/mm.h>
 #include <linux/sysctl.h>
+#include <linux/version.h>
 #include <net/net_namespace.h>
 #include "net/ipx.h"
 
@@ -24,7 +25,9 @@ static struct ctl_table ipx_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec,
 	},
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
 	{ },
+#endif
 };
 
 static struct ctl_table_header *ipx_table_header;
