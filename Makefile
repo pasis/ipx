@@ -7,7 +7,7 @@ build:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 clean:
 	rm -f *.o core .depend .*.cmd *.ko *.mod.c *.mod .*.o.d modules.order Module.symvers
-	rm -rf .tmp_versions
+	rm -rf .tmp_versions .module-common.o
 
 modules_install:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules_install
