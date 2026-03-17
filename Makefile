@@ -4,7 +4,7 @@ KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
 .PHONY: build clean modules_install
 build:
-	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
+	$(MAKE) -C $(KERNELDIR) -j$(NPROC) M=$(PWD) modules
 clean:
 	rm -f *.o core .depend .*.cmd *.ko *.mod.c *.mod .*.o.d modules.order Module.symvers
 	rm -rf .tmp_versions .module-common.o
